@@ -1,0 +1,11 @@
+{
+  "name": "email-usage-efficiency",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "leshich2011",
+  "license": "MIT"
+}
