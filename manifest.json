@@ -10,7 +10,11 @@
     },
     "content_scripts": {
         "js": [
-            
-        ]
+
+        ],
+        "matches": [
+            "*://mail.google.com/*"
+        ],
+        "run_at": "document_idle"
     }
   }
