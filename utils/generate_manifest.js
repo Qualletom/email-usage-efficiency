@@ -5,7 +5,7 @@ const path = require('path');
 // generates the manifest file using the package.json informations
 manifest.version = process.env.npm_package_version;
 manifest.background.scripts = ['/webpack/background.bundle.js'];
-manifest.content_scripts.js.push('/webpack/content.bundle.js');
+manifest.content_scripts[0].js.push('/webpack/content.bundle.js');
 
 
 let folder = '../build';

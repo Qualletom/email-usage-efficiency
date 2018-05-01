@@ -18,7 +18,7 @@ const mode = isDevEnv ? 'development' : 'production';
 const filesToCopy = [
     // {from: './js', to: 'js'},
     // {from: './css', to: 'css'},
-    // {from: './img', to: 'img'},
+    {from: './img', to: 'img'},
 ];
 
 const config = {
