@@ -23,6 +23,7 @@ const filesToCopy = [
 
 const config = {
     entry: {
+        inline: path.join(__dirname, 'src/inline/', 'inline.js'),
         content: ['babel-polyfill', path.join(__dirname, 'src/content/', 'content.js')],
         background: path.join(__dirname, 'src/background/', 'background.js'),
     },

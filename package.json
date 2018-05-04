@@ -10,7 +10,8 @@
   "author": "leshich2011",
   "license": "MIT",
   "dependencies": {
-    "babel-polyfill": "^6.26.0"
+    "babel-polyfill": "^6.26.0",
+    "gmail-js": "^0.7.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.2",

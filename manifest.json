@@ -23,12 +23,22 @@
         "16": "/img/icon16.png",
         "48": "/img/icon48.png",
         "128": "/img/icon128.png"
-      },
+    },
+    "permissions": [
+        "tabs",
+        "storage",
+        "*://*/*",
+        "background",
+        "identity"
+      ],
+    "web_accessible_resources": [
+        "webpack/*"
+    ],
     "content_security_policy": "script-src 'self' https://*.google.com 'unsafe-eval'; object-src 'self'",
     "oauth2": {
         "client_id": "162065162836-ih80skm53mckn18lauirth346tmlij5j.apps.googleusercontent.com",
         "scopes": [
-            "https://www.googleapis.com/auth/gmail.modify"
+            "https://www.googleapis.com/auth/gmail.readonly"
         ]
     }
   }
