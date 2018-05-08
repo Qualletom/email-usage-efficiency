@@ -88,6 +88,7 @@ const config = {
             format: chalk.green.bold('build [:bar]') + chalk.white.bold(':percent') + ' (:elapsed seconds)',
             clear: false,
         }),
+        new ExtractTextPlugin('css/trackOvldStyles.css'),
         new WriteFilePlugin(),
         new CopyWebpackPlugin(filesToCopy),
     ],

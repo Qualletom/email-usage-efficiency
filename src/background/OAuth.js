@@ -1,24 +1,20 @@
-import { setAccessToken } from './gmailApi';
+import { setAccessTokenForGAPI } from './gmailApi';
+import { sendMessageToContent } from './utils';
+import { saveToLocalstorage } from '../utils/utils';
 
 const manifest = chrome.runtime.getManifest();
 
 const CLIENT_ID = manifest.oauth2.client_id;
 
-const path = 'https://accounts.google.com/o/oauth2/auth?' +
-        'access_type=offline' +
-        '&approval_prompt=force' +
-        '&client_id=' + CLIENT_ID +
-        '&redirect_uri=urn:ietf:wg:oauth:2.0:oob' + 
-        '&response_type=code' +
-        '&scope=https://mail.google.com/ email profile'
-
-
 const left = Math.round((screen.width / 2) - (800 / 2));
 const top = Math.round((screen.height / 2) - (500 / 1.4));
 
-export default () => {
+let userEmail;
+
+export default (email) => {
+    userEmail = email;
     chrome.tabs.create({
-        url: path,
+        url: generatePath(CLIENT_ID),
         active: false
     }, createPopup);
 }
@@ -89,10 +85,28 @@ function fetchAccessToken(codeParam) {
 
     xhr.onreadystatechange = function() {
         if(xhr.readyState === 4 && xhr.status === 200) {
-            const accessToken = xhr.response["access_token"];
-            const refreshToken = xhr.response["refresh_token"]
-            setAccessToken(accessToken);
+            const account = {
+                [userEmail]: {
+                    accessToken: xhr.response["access_token"],
+                    refreshToken: xhr.response["refresh_token"]
+                }
+            }
+            setAccessTokenForGAPI(account[userEmail].accessToken);
+            saveToLocalstorage("emailEffAccounts", account);
+            sendMessageToContent("toContent:receivedTokens");
         }
     }
-    xhr.send();s
+    xhr.send();
+}
+
+function generatePath(clientId) {
+    const path = 'https://accounts.google.com/o/oauth2/auth?' +
+                  'access_type=offline' +
+                  '&approval_prompt=force' +
+                  '&client_id=' + clientId +
+                  '&redirect_uri=urn:ietf:wg:oauth:2.0:oob' + 
+                  '&response_type=code' +
+                  '&scope=https://mail.google.com/ email profile' + 
+                  '&user_id=' + userEmail;
+    return path;
 }

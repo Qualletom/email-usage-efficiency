@@ -49,7 +49,7 @@ export function getGAPIClient() {
     return result;
 }
 
-export const setAccessToken = async (accessToken) => {
+export const setAccessTokenForGAPI = async (accessToken) => {
     await getGAPIClient();
 
     //const isSameToken = (currentAccessToken === accessToken);

@@ -32,6 +32,7 @@
         "identity"
       ],
     "web_accessible_resources": [
+        "css/*",
         "webpack/*"
     ],
     "content_security_policy": "script-src 'self' https://*.google.com 'unsafe-eval'; object-src 'self'",

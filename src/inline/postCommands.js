@@ -11,7 +11,7 @@ export function Message(command) {
 
 export function postUsername(userEmail) {
     console.log("postUsername");
-    const message = new Message('inline:receivedUserEmail');
-    message.user_email = userEmail;
+    const message = new Message('toContent:receivedUserEmail');
+    message.userEmail = userEmail;
     window.postMessage(message, 'https://mail.google.com');
 }
