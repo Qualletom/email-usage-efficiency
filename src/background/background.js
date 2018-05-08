@@ -1,5 +1,6 @@
-import authenticate from './authenticate';
+import authenticate from './OAuth';
 import { init as initGmailApi } from './gmailApi';
+import { sendMessageToContent } from './utils';
 
 // Array of API discovery doc URLs for APIs used by the quickstart
 var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest"];
@@ -9,9 +10,9 @@ var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/gmail/v1/res
 var SCOPES = 'https://www.googleapis.com/auth/gmail.readonly';    
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    switch(request) {
-        case 'content:startAuthenticate': {
-            authenticate();
+    switch(request.command) {   
+        case 'toBackground:startAuthenticate': {
+            authenticate(request.userEmail);
             break;
         }
         default: 
@@ -21,6 +22,22 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     return true; 
 });
 
+chrome.runtime.onInstalled.addListener(function (details) {
+    if (details.reason === 'install') {
+        chrome.tabs.query({}, function (tabs) {
+            // reuse last openened gmail tab if found
+            for (let i = tabs.length - 1; i > -1; i--) {
+                if (tabs[i].url.indexOf('mail.google.com') > -1) {
+                    chrome.tabs.reload(tabs[i].id);
+                    chrome.tabs.update(tabs[i].id, {active: true});
+                    return;
+                }
+            }
+            // open a new gmail tab
+            chrome.tabs.create({url: gmailURL, active: true});
+        });
+    } 
+});
 
 /* here are some utility functions for making common gmail requests */
 function getThreads(query, labels){
