@@ -1,0 +1,134 @@
+.trackOvld-menu-container {
+    height: 36px;
+    width: 36px;
+}
+
+.trackOvld-menu {
+    width: 350px;
+    position: absolute;
+    top: 59px;
+    right: 50px;
+    margin: 0;
+    padding: 8px 0 0 0;
+    list-style-type: none;
+    text-align: left;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 10px rgba(0,0,0,.2);
+    border-radius: 5px;
+}
+
+.trackOvld-menu.disabled, .trackOvld-menu.remove {
+    line-height: normal;
+    padding-top: 0;
+}
+
+.trackOvld-menu-item {
+    color: #007AFF;
+    cursor: pointer;
+
+    padding: 1px 20px;
+
+    height: 45px;
+    line-height: 45px;
+
+    text-align: left;
+
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.trackOvld-menu-item:hover {
+    border-top: 1px solid rgba(0,0,0,0.05);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    padding: 0 20px;
+    background-color: rgba(245, 245, 245, 0.9);
+}
+
+.trackOvld-footer-item {
+    color: #636363;
+    cursor: pointer;
+
+    padding: 1px 20px;
+
+    height: 45px;
+    line-height: 45px;
+
+    font-size: 13px;
+
+    background-color: rgba(0,0,0,0.01);
+
+    display: flex;
+    align-items: center;
+}
+
+.trackOvld-footer-item:hover {
+    border-top: 1px solid rgba(0,0,0,0.05);
+    padding: 0 20px 1px 20px;
+    background-color: rgba(245, 245, 245, 0.9);
+}
+
+.trackOvld-footer-item-icon {
+    fill: currentColor;
+}
+
+.trackOvld-toolbar-icon {
+    height: 36px;
+    width: 36px;
+    cursor: pointer;
+    position: relative;
+}
+
+.timyo-toolbar-triangle, .timyo-toolbar-triangle-border {
+    position: absolute;
+    left: 9px;
+    content: '';
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #ffffff;
+
+    z-index: 1000;
+    top: 40px;
+}
+
+.timyo-toolbar-triangle-border {
+    top: 39px;
+    z-index: 999;
+    border-bottom-color: rgba(0,0,0,.2);
+}
+
+.trackOvld-toolbar-icon-img {
+    border: 2px solid rgba(0,0,0,0.01);
+    border-radius: 50%;
+
+    &:hover {
+        border-color: rgba(0,0,0,0.05);
+    }
+}
+
+.trackOvld-dropdown-content {
+    padding: 20px;
+    text-align: center;
+}
+
+.trackOvld-enable-button {
+    background-color: #007AFF;
+    border: 0px;
+    border-radius: 2px;
+    color: #fff;
+    cursor: pointer;
+    font-family: arial, sans-serif;
+    font-size: 16px;
+    width: 100%;
+    height: 40px;
+}
+
+.trackOvld-enable-button:hover {
+    box-shadow: inset 0 -1px 0 rgba(10, 15, 20, .18), 0 0 2px rgba(10, 15, 20, .15), 0 1px 4px rgba(10, 15, 20, .25);
+    background-color: #0165D2;
+}
+
+.trackOvld-deactivate-for {
+    padding-left: 3px;
+}

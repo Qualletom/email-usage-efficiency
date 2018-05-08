@@ -1,0 +1,96 @@
+.securityModal {
+    width: 520px;
+    margin: 56px 100px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    color: rgba(56,56,56,0.9);
+    font-size: 14px;
+    line-height: 22px;
+
+    white-space: pre-wrap;
+
+    &__close {
+        position: absolute;
+        top: 29px;
+        right: 29px;
+
+        height: 14px;
+        width: 14px;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    &__welcome {
+        height: 30px;
+        color: #111111;
+        font-size: 26px;
+        font-weight: bold;
+        line-height: 31px;
+        margin: 0 0 24px 0;
+    }
+
+    &__please-click {
+        margin-top: 0;
+        margin-bottom: 16px;
+        text-align: center;
+    }
+
+    &__text {
+
+    }
+
+    &__separator {
+        width: 100%;
+    }
+
+    &__btn {
+        cursor: pointer;
+
+        border: none;
+        border-radius: 4px;
+
+        background-color: #028EFF;
+        color: #ffffff;
+
+        font-size: 12px;
+        font-weight: bold;
+
+        margin: 10px 0 16px 0;
+
+        height: 42px;
+        width: 148px;
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+
+    &__secure-connection {
+        height: 16px;
+        width: 113px;
+        color: #0A8043;
+        font-family: Arial;
+        font-size: 14px;
+        line-height: 16px;
+    }
+
+    .dont-upgrade {
+        height: 22px;
+        width: 435px;
+        color: rgba(84,87,89,0.9);
+        font-family: Arial;
+        font-size: 14px;
+        line-height: 22px;
+        text-align: center;
+
+        &__link {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    }
+}
