@@ -22,9 +22,6 @@ const menuState = {
 export default (state = menuState, { type, payload }) => {
     switch (type) {
         case OPEN_MENU:
-            return {
-                ...payload,
-            };
         case CLOSE_MENU:
             return {
                 ...payload,

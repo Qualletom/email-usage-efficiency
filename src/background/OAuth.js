@@ -1,6 +1,6 @@
 import { setAccessTokenForGAPI } from './gmailApi';
 import { sendMessageToContent } from './utils';
-// import { saveToLocalstorage } from '../utils/utils';
+import { saveToLocalstorage } from '../utils/utils';
 import { TO_CONTENT_RECEIVED_TOKENS } from '../utils/messageCommands';
 
 const manifest = chrome.runtime.getManifest();
@@ -86,15 +86,13 @@ function fetchAccessToken(codeParam) {
 
     xhr.onreadystatechange = function() {
         if(xhr.readyState === 4 && xhr.status === 200) {
-            const account = {
-                [userEmail]: {
-                    accessToken: xhr.response["access_token"],
-                    refreshToken: xhr.response["refresh_token"]
-                }
+            const tokens = {
+                accessToken: xhr.response["access_token"],
+                refreshToken: xhr.response["refresh_token"]
             }
-            setAccessTokenForGAPI(account[userEmail].accessToken);
-            // saveToLocalstorage("emailEffAccounts", account);
-            sendMessageToContent(TO_CONTENT_RECEIVED_TOKENS);
+            setAccessTokenForGAPI(tokens.accessToken);
+            saveTokensToLocalStorage(tokens);
+            // sendMessageToContent(TO_CONTENT_RECEIVED_TOKENS);
         }
     }
     xhr.send();
@@ -110,4 +108,18 @@ function generatePath(clientId) {
                   '&scope=https://mail.google.com/ email profile' + 
                   '&user_id=' + userEmail;
     return path;
+}
+
+function saveTokensToLocalStorage(tokens) {
+    chrome.storage.local.get("allAccounts", (result) => {
+        const accounts = result.allAccounts;
+        accounts[userEmail].accessToken = tokens.accessToken;
+        accounts[userEmail].refreshToken = tokens.refreshToken;
+        accounts[userEmail].isLogged = true;
+        accounts[userEmail].notUpgrade = true;
+
+        chrome.storage.local.set({"allAccounts" : accounts}, () => {
+            console.log("saved to localstorage ", accounts);
+        });
+    });
 }

@@ -1,6 +1,7 @@
 import { TO_BACKGROUND_START_AUTHENTICATE } from '../utils/messageCommands';
 import { sendChromeMessage } from '../utils/utils';
 import { openModal } from './redux/modules/modal';
+import { init as initAccount } from './redux/modules/accounts';
 
 export function isAuthNeed(store) {
     const { session, 
@@ -19,7 +20,7 @@ export function isAuthNeed(store) {
 }
 
 export function tryAuth(store, isAccountInitNeed) {
-    const userEmail = store.getState().currentUserEmail;
+    const userEmail = store.getState().session.currentUserEmail;
     if (!isAccountInitNeed) {
         store.dispatch(initAccount(userEmail)); 
     }

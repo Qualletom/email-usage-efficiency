@@ -27,18 +27,18 @@ export const loadAccounts = (accounts = {}) => ({
     },
 });
 
-export const setTokens = (tokens = {}) => ({
+export const setTokens = (tokens = {}, email) => ({
     type: SET_TOKENS,
     payload: {
-        ...tokens,
+        tokens,
+        email
     },
 });
 
-export const deleteTokens = () => ({
+export const deleteTokens = (email) => ({
     type: DELETE_TOKENS,
     payload: {
-        accessToken: '',
-        refreshToken: ''
+        email
     },
 });
 
@@ -46,20 +46,21 @@ export const updateAccessToken = (newAccessToken = '') => ({
     type: UPDATE_ACCESS_TOKEN,
     payload: {
         accessToken: newAccessToken,
+        email
     },
 });
 
-export const disableAccount = () => ({
+export const disableAccount = (email) => ({
     type: DISABLE_ACCOUNT,
     payload: {
-        notUpgrade: true,
+        email,
     },
 });
 
-export const enableAccount = () => ({
+export const enableAccount = (email) => ({
     type: ENABLE_ACCOUNT,
     payload: {
-        notUpgrade: false,
+        email,
     },
 });
 
@@ -74,7 +75,6 @@ const defaultAccountState = {
 export default (allAccounts = { }, action) => {
     const { payload = {} } = action;
     const { email } = payload;
-    // const accountData = allAccounts[email] || {};
 
     switch (action.type) { 
         case INIT:
@@ -84,13 +84,34 @@ export default (allAccounts = { }, action) => {
                 }
             }
         case SET_TOKENS:
+            return {
+                [email]: {
+                    ...payload.tokens,
+                }
+            }
         case DELETE_TOKENS:
+            return {
+                [email]: {
+                    accessToken: '',
+                    refreshToken: '',
+                }
+            }
         case UPDATE_ACCESS_TOKEN:
+            return {
+                [email]: {
+                    accessToken: payload.accessToken,
+                }
+            }
         case DISABLE_ACCOUNT:
+            return {
+                [email]: {
+                    notUpgrade: true,
+                }
+            }
         case ENABLE_ACCOUNT:
             return {
                 [email]: {
-                    ...payload,
+                    notUpgrade: false,
                 }
             }
         case LOAD_ACCOUNTS:

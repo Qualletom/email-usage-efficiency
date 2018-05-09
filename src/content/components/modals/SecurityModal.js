@@ -7,7 +7,7 @@ import LockIcon from './icons/lock';
 import './scss/SecurityModal.scss';
 
 import { startAuthetnicate } from '../../authenticate';
-// import timyoOAuth from './../../utils/timyoOAuth';
+import { disableAccount } from '../../redux/modules/accounts';
 
 class SecurityModal extends Component {
     close = () => {

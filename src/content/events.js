@@ -1,6 +1,4 @@
-import { init as initAccount,
-         loadAccounts,
-         setTokens } from './redux/modules/accounts';
+import { loadAccounts} from './redux/modules/accounts';
 
 import { setEmail } from './redux/actions';
 
@@ -58,13 +56,13 @@ function setChromeListeners(store) {
 function loadAccountFromLocalStorage(store, email) {
     return new Promise((resolve, reject) => {
         chrome.storage.local.get("allAccounts", (result) => {
-            if (!result[email]) {
+            if (!result.allAccounts[email]) {
                 return resolve(false);
             }
             store.dispatch(loadAccounts(result.allAccounts));
             console.log("get from localstorage ", result.allAccounts);
+            return resolve(true);
         });
-        return resolve(true);
     })  
     
 }
