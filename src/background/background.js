@@ -2,6 +2,8 @@ import authenticate from './OAuth';
 import { init as initGmailApi } from './gmailApi';
 import { sendMessageToContent } from './utils';
 
+import { TO_BACKGROUND_START_AUTHENTICATE } from '../utils/messageCommands';
+
 // Array of API discovery doc URLs for APIs used by the quickstart
 var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest"];
 
@@ -11,7 +13,8 @@ var SCOPES = 'https://www.googleapis.com/auth/gmail.readonly';
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     switch(request.command) {   
-        case 'toBackground:startAuthenticate': {
+        case TO_BACKGROUND_START_AUTHENTICATE: {
+            console.log("background:start authenticate for ", request.userEmail);
             authenticate(request.userEmail);
             break;
         }

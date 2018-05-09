@@ -1,4 +1,8 @@
-import { sendChromeMessage } from '../utils/utils';
+import reduxWatch from 'redux-watch'
+
+import { sendChromeMessage,
+         saveToLocalstorage } from '../utils/utils';
+
 import initEvents from './events';
 
 import initStore, { getState } from './redux/store';
@@ -7,9 +11,13 @@ import initMenu from './initMenu';
 
 const store = initStore();
 
-init();
+let w = reduxWatch(store.getState, 'allAccounts');
+store.subscribe(w((newValue, oldValue, objectPath) => {
+    saveToLocalstorage("allAccounts", newValue)
+    console.log('%s changed from %s to %s', objectPath, oldValue, newValue);
+  }))
 
-// sendChromeMessage("test");
+init();
 
 function injectScript(src) {
     const script = document.createElement("script");
@@ -29,7 +37,6 @@ function injectScript(src) {
 
 function appendStyleFileToHead(url) {
     var style = document.createElement('link');
-//<link rel="stylesheet" type="text/css" href="mystyle.css">
     style.rel = 'stylesheet';
     style.type = 'text/css';
     style.href = url;

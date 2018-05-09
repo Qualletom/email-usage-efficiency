@@ -1,6 +1,7 @@
 import { setAccessTokenForGAPI } from './gmailApi';
 import { sendMessageToContent } from './utils';
-import { saveToLocalstorage } from '../utils/utils';
+// import { saveToLocalstorage } from '../utils/utils';
+import { TO_CONTENT_RECEIVED_TOKENS } from '../utils/messageCommands';
 
 const manifest = chrome.runtime.getManifest();
 
@@ -92,8 +93,8 @@ function fetchAccessToken(codeParam) {
                 }
             }
             setAccessTokenForGAPI(account[userEmail].accessToken);
-            saveToLocalstorage("emailEffAccounts", account);
-            sendMessageToContent("toContent:receivedTokens");
+            // saveToLocalstorage("emailEffAccounts", account);
+            sendMessageToContent(TO_CONTENT_RECEIVED_TOKENS);
         }
     }
     xhr.send();

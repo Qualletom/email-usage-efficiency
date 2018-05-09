@@ -6,13 +6,18 @@ import {
 } from 'redux';
 
 import reducers from './reducers';
-// import { middlewares } from './middlewares';
+// import localStorage from './middlewares/localstorage';
 
 import { accountsState } from './modules/accounts';
 
 // import { getLogger, isReduxLoggerOn } from 'timyoDebug';
 
 // const debug = getLogger('content/redux/store');
+
+
+// const middlewares = [
+//     localStorage,
+// ];
 
 const contentAppState = {
     session: {
@@ -38,7 +43,7 @@ export function dispatch(action) {
 }
 
 export default function initStore() {
-    // let bindedMiddlewares = applyMiddleware(...middlewares);
+    // const bindedMiddlewares = applyMiddleware(...middlewares);
 
     console.log('init store with default state', contentAppState);
 

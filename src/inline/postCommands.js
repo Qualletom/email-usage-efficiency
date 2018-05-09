@@ -1,3 +1,5 @@
+import { TO_CONTENT_RECEIVED_USER_EMAIL } from '../utils/messageCommands';
+
 export function Message(command) {
     this.type = 'command';
     this.command = command;

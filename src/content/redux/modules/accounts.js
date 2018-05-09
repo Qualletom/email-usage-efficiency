@@ -11,6 +11,13 @@ export const init = (email) => ({
     payload: {
         email,
     },
+    meta: {
+        localStorage: {
+            set: {
+                name: 'SET_TMP_TIMYO_UUID',
+            }
+        },
+    },
 });
 
 export const loadAccounts = (accounts = {}) => ({

@@ -4,8 +4,10 @@ import { init as initAccount,
 
 import { setEmail } from './redux/actions';
 
-import { isAuthNeed } from './authenticate';
-import { openModal } from './redux/modules/modal';
+import { tryAuth } from './authenticate';
+
+import { TO_CONTENT_RECEIVED_USER_EMAIL,
+         TO_CONTENT_RECEIVED_TOKENS } from '../utils/messageCommands';
 
 export default (store) => {
     setWindowListeners(store);
@@ -19,17 +21,15 @@ function setWindowListeners(store) {
             console.log("emailEfficiency inline message");
 
             switch (event.data.command) {
-                case 'toContent:receivedUserEmail': {
+                case TO_CONTENT_RECEIVED_USER_EMAIL: {
                     const userEmail = event.data.userEmail;
                     store.dispatch(setEmail(userEmail));
-                    store.dispatch(initAccount(userEmail));
                     console.log("store state is ", store.getState());
-                    loadAccountsFromLocalStorage(store);
-
-                    if (isAuthNeed(store)) {
-                        store.dispatch(openModal('SECURITY'));
-                        console.log("open security modal");
-                    }
+                    loadAccountFromLocalStorage(store, userEmail)
+                        .then((isAccountInitNeed) => {
+                            console.log("store state is ", store.getState());
+                            tryAuth(store, isAccountInitNeed);
+                        }) 
                     break;
                 }
                     
@@ -41,8 +41,8 @@ function setWindowListeners(store) {
 function setChromeListeners(store) {
     chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         switch(request.command) {   
-            case 'toContent:receivedTokens': {
-                console.log("toContent:receivedTokens");
+            case TO_CONTENT_RECEIVED_TOKENS: {
+                console.log(TO_CONTENT_RECEIVED_TOKENS);
                 // const { session, accounts } = store.getState();
                 
                 break;
@@ -55,10 +55,17 @@ function setChromeListeners(store) {
     });
 }
 
-function loadAccountsFromLocalStorage(store) {
-    chrome.storage.local.get("allAccounts", (accounts) => {
-        store.dispatch(loadAccounts(accounts));
-        console.log("get from localstorage ", accounts);
-    });
+function loadAccountFromLocalStorage(store, email) {
+    return new Promise((resolve, reject) => {
+        chrome.storage.local.get("allAccounts", (result) => {
+            if (!result[email]) {
+                return resolve(false);
+            }
+            store.dispatch(loadAccounts(result.allAccounts));
+            console.log("get from localstorage ", result.allAccounts);
+        });
+        return resolve(true);
+    })  
+    
 }
 

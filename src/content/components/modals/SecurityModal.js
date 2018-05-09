@@ -6,6 +6,7 @@ import LockIcon from './icons/lock';
 
 import './scss/SecurityModal.scss';
 
+import { startAuthetnicate } from '../../authenticate';
 // import timyoOAuth from './../../utils/timyoOAuth';
 
 class SecurityModal extends Component {
@@ -13,18 +14,16 @@ class SecurityModal extends Component {
         this.props.closeModal();
     };
 
-    activate = () => {
+    activate = (userEmail) => {
         this.close();
-        // timyoOAuth(this.props.store);
+        startAuthetnicate(userEmail);
     };
 
     render() {
         const mainCssClass = 'securityModal';
         const test = this.props.store.getState();
         
-        const {
-            session: { currentUserEmail: email },
-        } = this.props.store.getState();
+        const { session } = this.props.store.getState();
 
         return (
             <div className={mainCssClass}>
@@ -38,7 +37,7 @@ class SecurityModal extends Component {
                     <p className={`${mainCssClass}__please-click`}>Please click below to securely upgrade your email.</p>
                 </div>
 
-                <button className={`${mainCssClass}__btn`} onClick={this.activate}>
+                <button className={`${mainCssClass}__btn`} onClick={() => this.activate(session.currentUserEmail)}>
                     Activate Extension
                 </button>
 
@@ -55,7 +54,7 @@ class SecurityModal extends Component {
                     }}>
                         Don't upgrade this account:
                     </span>
-                    <span> {email}</span>
+                    <span> {session.currentUserEmail}</span>
                 </div>
             </div>
         );
